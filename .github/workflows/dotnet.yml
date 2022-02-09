@@ -24,4 +24,4 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Run
-      run: dotnet run --configuration Release -o /WebApiTest
+      run: dotnet run --configuration Release -o /WebApiTest/WebApiTest.csproj
