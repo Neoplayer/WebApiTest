@@ -1,4 +1,4 @@
-﻿namespace WebApiTest.Dto
+﻿namespace Home.Core.Dto
 {
     public class Command
     {

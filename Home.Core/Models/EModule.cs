@@ -1,4 +1,4 @@
-﻿namespace WebApiTest.Models
+﻿namespace Home.Core.Models
 {
     public enum EModule
     {

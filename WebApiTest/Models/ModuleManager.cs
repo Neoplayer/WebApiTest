@@ -1,10 +1,11 @@
-﻿using WebApiTest.Modules;
+﻿using Home.Core.Models;
+using Home.Core.Modules;
 
 namespace WebApiTest.Models
 {
     public static class ModuleManager
     {
-        public static IModule GetModule(EModule eModule, string pin)
+        public static ModuleBase GetModule(EModule eModule, string pin)
         {
             return eModule switch
             {
