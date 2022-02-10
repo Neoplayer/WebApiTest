@@ -14,12 +14,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Stopping working Instance
-      run: docker stop myapp
-    - name: Remove Instance
-      run: docker rm myapp
-    - name: Remove Image
-      run: docker rmi webapi -f
+#     - name: Stopping working Instance
+#       run: docker stop myapp
+#     - name: Remove Instance
+#       run: docker rm myapp
+#     - name: Remove Image
+#       run: docker rmi webapi -f
     - name: Build the Docker image
       run: docker build . -t webapi
     - name: Run Docker image
