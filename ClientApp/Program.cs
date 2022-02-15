@@ -9,10 +9,10 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddAntDesign();
 builder.Services.AddHttpClient();
 
-var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy(name: "_myAllowSpecificOrigins",
         builder =>
         {
             builder.WithOrigins(

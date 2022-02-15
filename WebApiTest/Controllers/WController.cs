@@ -82,9 +82,17 @@ namespace WebApiTest.Controllers
             if (user == null)
                 return BadRequest(new { message = "User not found" });
 
+            var sensorsData = data.Data.Split(',');
+            foreach (var sensor in sensorsData)
+            {
+                var sensorData = sensor.Split(':');
+                var module = user.Modules.FirstOrDefault(x => x.Pin == sensorData[0]);
 
-            // handle data
-
+                if (module != null)
+                {
+                    module.Value = sensorData[1];
+                }
+            }
 
             var response = string.Join(',', user.CommandsQueue.Select(x => x.Pin + ":" + x.Value));
             user.CommandsQueue.Clear();

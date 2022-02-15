@@ -4,23 +4,25 @@
 
 <PageTitle>Главная страница</PageTitle>
 
-@* <Select DataSource="@_list" *@
-@* 		@bind-Value="@_selectedValue1" *@
-@* 		DefaultValue="@("lucy")" *@
-@* 		ValueName="@nameof(Person.Value)" *@
-@* 		LabelName="@nameof(Person.Name)" *@
-@* 		DisabledName="@nameof(Person.IsDisabled)" *@
-@* 		Style="width:120px" *@
-@* 		OnSelectedItemChanged="OnSelectedItemChangedHandler"> *@
-@* </Select> *@
+<Switch @bind-Checked="switchValue" OnChange="OnSwitchChange"/>
 
 
 @code{
-	
+	bool switchValue { get; set; }
 	
 	protected override async Task OnInitializedAsync()
 	{
 		
+	}
+
+	private async Task OnSwitchChange()
+	{
+		var request = new HttpRequestMessage(HttpMethod.Post,
+			"http://194.58.107.109:8080/W/UpdateModuleStatus");
+		request.Content = new StringContent("{\"user\":\"Me\",\"password\":\"123\",\"command\":{\"pin\":\"2\",\"value\":\"" + (switchValue ? "1": "0") + "\"}}");
+
+		var client = ClientFactory.CreateClient();
+		var response = await client.SendAsync(request);
 	}
 
 }
