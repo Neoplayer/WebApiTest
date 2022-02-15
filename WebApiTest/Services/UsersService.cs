@@ -18,11 +18,8 @@ public class UsersService : IUsersService
 
     public bool AddUser(User user)
     {
-        if (users.Any(x => x.Name == user.Name))
-        {
-            return false;
-        }
-        
+        users.Clear();
+
         users.Add(user);
         return true;
     }
