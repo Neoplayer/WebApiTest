@@ -37,5 +37,5 @@ jobs:
     - name: Build the Docker image
       run: docker-compose -f ClientApp/docker-compose.yaml build
     - name: Run Docker image
-      run: docker-compose -f ClientApp/docker-compose.yaml up
+      run: docker-compose -f ClientApp/docker-compose.yaml up -d
 
