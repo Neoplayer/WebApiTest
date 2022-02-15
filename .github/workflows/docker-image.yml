@@ -41,5 +41,5 @@ jobs:
     - name: Build the Docker image
       run: docker build ./ClientApp/ -t front
     - name: Run Docker image
-      run: docker run -d -p 8080:80 --name myfrontapp front
+      run: docker run -d -p 8090:80 --name myfrontapp front
 
