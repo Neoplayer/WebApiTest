@@ -32,10 +32,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Enter to directory
-      run: cd ClientApp/
+#     - name: Enter to directory
+#       run: cd ClientApp/
     - name: Build the Docker image
-      run: docker-compose build
+      run: docker-compose -f ClientApp/docker-compose.yaml build
     - name: Run Docker image
-      run: docker-compose up
+      run: docker-compose -f ClientApp/docker-compose.yaml up
 
