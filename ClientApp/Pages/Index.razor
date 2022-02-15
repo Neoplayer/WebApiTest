@@ -2,16 +2,20 @@
 
 @inject IHttpClientFactory ClientFactory
 
-<PageTitle>Главная страница</PageTitle>
+<PageTitle>Главная страница111</PageTitle>
 
+<Switch @bind-Checked="switchValue" OnChange="OnSwitchChange"/>
 <Switch @bind-Checked="switchValue" OnChange="OnSwitchChange"/>
 
 
 @code{
-	bool switchValue { get; set; }
+	bool switchValue { get; set; } = true;
 	
 	protected override async Task OnInitializedAsync()
 	{
+	
+	
+	
 		
 	}
 
