@@ -18,7 +18,7 @@
 	private async Task OnSwitchChange()
 	{
 		var request = new HttpRequestMessage(HttpMethod.Post,
-			"http://194.58.107.109:8080/W/UpdateModuleStatus");
+			 Settings.Address + "/W/UpdateModuleStatus");
 		request.Content = new StringContent("{\"user\":\"Me\",\"password\":\"123\",\"command\":{\"pin\":\"2\",\"value\":\"" + (switchValue ? "1": "0") + "\"}}");
 
 		var client = ClientFactory.CreateClient();
