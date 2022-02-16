@@ -5,7 +5,7 @@
 
 @inject IHttpClientFactory ClientFactory
 
-<PageTitle>Модули</PageTitle>
+<PageTitle>Умный Дом</PageTitle>
 
 
 
@@ -20,8 +20,8 @@
 	<GridCol Span="24">
 		@if (_hasLoaded)
         {
-            <AntList Grid="grid" DataSource="@modules">
-	            <ListItem >
+            <AntList Grid="grid" DataSource="@modules" >
+	            <ListItem>
 		            <ModuleCard Module="@context"/>
 	            </ListItem>
             </AntList>

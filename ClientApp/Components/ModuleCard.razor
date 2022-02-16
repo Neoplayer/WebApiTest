@@ -1,13 +1,15 @@
 @using Home.Core.Modules
 @using Home.Core.Models
 
-<Card Bordered="true" Title=@($"{Module.Name} ({Module.Pin})") Style="width: 300px"> 
+<Card Bordered="true" Title=@($"{Module.Name} ({Module.Pin})") Style="width: 250px" BodyStyle="display: flex; flex-direction: column; justify-content: center; align-items: center"> 
     <Body>
-        <p>Значение: @(Module.Value ?? "Нет данных")</p>
-        
         @if (Module.ConnectionType != EConnectionType.IN)
         {
-            <ModuleForm Module="Module" />
+            <ModuleForm Module="Module"/>
+        }
+        else
+        {
+            <p>Значение: @(Module.Value ?? "Нет данных")</p>
         }
     </Body>
 </Card>
