@@ -64,6 +64,18 @@ namespace WebApiTest.Controllers
             return Ok(response);
         }
         
+        [HttpGet("GetUserSensorById")]
+        public IActionResult GetUserSensorById(string user, string password, string sensor)
+        {
+            var modules = _usersService.GetUserModules(user, password);
+
+            var module = modules.FirstOrDefault(x => x.Pin == sensor);    // TODO in Service
+            
+            var response = JsonConvert.SerializeObject(module);
+            
+            return Ok(response);
+        }
+        
         [HttpPost("UpdateModuleStatus")]
         public IActionResult UpdateModuleStatus(UpdateModuleData data)
         {

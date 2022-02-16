@@ -1,5 +1,8 @@
 @using Home.Core.Modules
 @using Home.Core.Models
+@using Newtonsoft.Json
+
+@inject IHttpClientFactory ClientFactory
 
 <Card Bordered="true" Title=@($"{Module.Name} ({Module.Pin})") Style="width: 250px" BodyStyle="display: flex; flex-direction: column; justify-content: center; align-items: center"> 
     <Body>
@@ -17,6 +20,38 @@
 @code {
     [Parameter]
     public ModuleBase Module { get; set; }
-    
-    
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UpdateValue();
+    }
+
+    async Task UpdateValue()
+    {
+        while (true)
+        {
+            await Task.Run(async () =>
+            {            
+                var request = new HttpRequestMessage(HttpMethod.Get,
+                Settings.Address + "/W/GetUserSensorById?user=Me&password=123&sensor=" + Module.Pin);
+                request.Headers.Add("Access-Control-Allow-Origin", "http://194.58.107.109:8080");
+                request.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+		
+		
+                var client = ClientFactory.CreateClient();
+                var response = await client.SendAsync(request);
+
+                var module = JsonConvert.DeserializeObject<ModuleBase>(await response.Content.ReadAsStringAsync())?? null;
+
+                Module = module;
+                
+                StateHasChanged();
+            });
+
+            
+            await Task.Delay(100);
+        }
+        System.Diagnostics.Debug.WriteLine("Finished long running task");
+    }
 }
