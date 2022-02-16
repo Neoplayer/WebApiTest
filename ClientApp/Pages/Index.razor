@@ -1,34 +1,96 @@
 ﻿@page "/"
+@using System.Text
+@using Home.Core.Modules
+@using Newtonsoft.Json
 
 @inject IHttpClientFactory ClientFactory
 
-<PageTitle>Главная страница111</PageTitle>
+<PageTitle>Модули</PageTitle>
 
-<Switch @bind-Checked="switchValue" OnChange="OnSwitchChange"/>
+
+
+<Row>
+	<GridCol Span="22"> </GridCol>
+    <GridCol Span="2">
+        <Button OnClick="UpdateButtonClick">Обновить</Button>
+    </GridCol>
+</Row>
+<Divider />
+<Row>
+	<GridCol Span="24">
+		@if (_hasLoaded)
+        {
+            <AntList Grid="grid" DataSource="@modules">
+	            <ListItem >
+		            <ModuleCard Module="@context"/>
+	            </ListItem>
+            </AntList>
+        }
+        else
+        {
+            <Spin />
+        }
+	</GridCol>   
+</Row>
+
 
 
 @code{
-	bool switchValue { get; set; } = true;
+	private bool _hasLoaded = false;
+	
+	private List<ModuleBase> modules = new List<ModuleBase>();
 	
 	protected override async Task OnInitializedAsync()
 	{
-	
-	
-	
-		
+		await UpdateModules();
 	}
 
-	private async Task OnSwitchChange()
+	
+	private async Task OnSwitchChange1()
 	{
-		var request = new HttpRequestMessage(HttpMethod.Post,
-			 Settings.Address + "/W/UpdateModuleStatus");
-		request.Content = new StringContent("{\"user\":\"Me\",\"password\":\"123\",\"command\":{\"pin\":\"2\",\"value\":\"" + (switchValue ? "1": "0") + "\"}}");
+		var request = new HttpRequestMessage(HttpMethod.Get,
+			Settings.Address + "/W/Users");
 		request.Headers.Add("Access-Control-Allow-Origin", "http://194.58.107.109:8080");
 		request.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 		
 		
 		var client = ClientFactory.CreateClient();
 		var response = await client.SendAsync(request);
+		
+		Console.WriteLine(await response.Content.ReadAsStringAsync()); 
+	}
+	
+	
+	private ListGridType grid = new()
+	{
+		Gutter = 16,
+		Xs = 1,
+		Sm = 2,
+		Md = 4,
+		Lg = 4,
+		Xl = 6,
+		Xxl = 3,
+	};
+
+	private async Task UpdateButtonClick()
+	{
+		_hasLoaded = false;
+		await UpdateModules();
 	}
 
+	private async Task UpdateModules()
+	{
+		var request = new HttpRequestMessage(HttpMethod.Get,
+			Settings.Address + "/W/GetUsersSensors?user=Me&password=123");
+		request.Headers.Add("Access-Control-Allow-Origin", "http://194.58.107.109:8080");
+		request.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+		
+		
+		var client = ClientFactory.CreateClient();
+		var response = await client.SendAsync(request);
+
+		modules = JsonConvert.DeserializeObject<List<ModuleBase>>(await response.Content.ReadAsStringAsync())?? new List<ModuleBase>();
+		
+		_hasLoaded = true;
+	}
 }

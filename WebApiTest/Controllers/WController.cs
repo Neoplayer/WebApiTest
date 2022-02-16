@@ -1,5 +1,6 @@
 using Home.Core.Dto;
 using Home.Core.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebApiTest.Dto;
@@ -8,7 +9,7 @@ using WebApiTest.Services;
 
 namespace WebApiTest.Controllers
 {
-    
+    [EnableCors("MyPolicy")]
     [ApiController]
     [Route("[controller]")]
     public class WController : ControllerBase
@@ -49,6 +50,7 @@ namespace WebApiTest.Controllers
             return Ok();
         }
 
+        [DisableCors]
         [HttpGet("Users")]
         public IActionResult Users()
         {
@@ -65,6 +67,7 @@ namespace WebApiTest.Controllers
             return Ok(response);
         }
         
+        [DisableCors]
         [HttpPost("UpdateModuleStatus")]
         public IActionResult UpdateModuleStatus(UpdateModuleData data)
         {

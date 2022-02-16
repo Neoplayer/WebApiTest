@@ -1,0 +1,83 @@
+@using Home.Core.Modules
+@using System.Text
+@using System.Globalization
+
+@inject IHttpClientFactory ClientFactory
+
+
+@if (Module.ValueType == typeof(bool))
+{
+    <Switch @bind-Checked="_switchValue"/>
+}
+else if(Module.ValueType == typeof(int))
+{
+    <Slider TValue="double" Value="_sliderValue" Min="@Module.ValueMaxInt" Max="@Module.ValueMaxInt" DefaultValue="_sliderValue" />
+}
+else if (Module.ValueType == typeof(string))
+{
+    <Input @bind-Value="@_inputValue"  />
+}
+
+<Button OnClick="UpdateModuleStatus" >Oтправить</Button>
+
+@code {
+    [Parameter]
+    public ModuleBase Module { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Module.ValueType == typeof(bool))
+        {
+            bool.TryParse(Module.Value, out var res);
+
+            _switchValue = res;
+        }
+        else if(Module.ValueType == typeof(int))
+        {
+            int.TryParse(Module.Value, out var res);
+
+            _sliderValue = res;
+        }
+        else if (Module.ValueType == typeof(string))
+        {
+            _inputValue = Module.Value;
+        }
+    }
+
+    private bool _switchValue;
+    private double _sliderValue = 0;
+    private string _inputValue;
+
+    
+    private async Task UpdateModuleStatus()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Post,
+            Settings.Address + "/W/UpdateModuleStatus");
+        request.Content = new StringContent($"{{\"user\":\"Me\",\"password\":\"123\",\"command\":{{\"pin\":\"{Module.Pin}\",\"value\":\"{GetValue()}\"}}}}", Encoding.UTF8, "application/json");
+        request.Headers.Add("Access-Control-Allow-Origin", "http://194.58.107.109:8080");
+        request.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+		
+		
+        var client = ClientFactory.CreateClient();
+        var response = await client.SendAsync(request);
+		
+        Console.WriteLine(await response.Content.ReadAsStringAsync()); 
+    }
+
+    private string GetValue()
+    {
+        if (Module.ValueType == typeof(bool))
+        {
+            return _switchValue.ToString();
+        }
+        else if(Module.ValueType == typeof(int))
+        {
+            return _sliderValue.ToString(CultureInfo.InvariantCulture);
+        }
+        else if (Module.ValueType == typeof(string))
+        {
+            return _inputValue;
+        }
+        return "";
+    }
+}

@@ -2,6 +2,30 @@
 {
     public enum EModule
     {
-        LED
+        IrRemoteControl,
+        IrOptocoupler,
+        ColorSensor,
+        DistanceSensor,
+        LightSensor,
+        Button,
+        TemperatureSensor,
+        MicrophoneAnalog,
+        ThresholdMicrophone,
+        PositionSensor,
+        ShaftAngleSensor,
+        TiltSensor,
+        ShockSensor,
+        FireSensor,
+        MagneticFieldSensor,
+        BendingSensor,
+        Neurohoop,
+        HdCamera,
+        DcMotor,
+        ServoMotor,
+        Display,
+        Led,
+        Speaker,
+        Buzzer,
+        AudioTrack
     }
 }

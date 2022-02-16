@@ -1,0 +1,17 @@
+@using Home.Core.Modules
+
+<Card Bordered="true" Title=@($"{Module.Name} ({Module.Pin})") Style="width: 300px"> 
+    <Body>
+        <p>Значение: @(Module.Value ?? "Нет данных")</p>
+    
+    @* TODO Some forms with Params Id and type of module *@
+    @* It must dispatch type of fielsd and valus range. *@
+    </Body>
+</Card>
+
+@code {
+    [Parameter]
+    public ModuleBase Module { get; set; }
+    
+    
+}
