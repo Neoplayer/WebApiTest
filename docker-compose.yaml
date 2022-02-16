@@ -5,6 +5,6 @@ services:
     image: blazorapp
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: DockerfileFront
     ports:
       - 8090:80
