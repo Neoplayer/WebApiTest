@@ -21,7 +21,7 @@ jobs:
     - name: Remove Image
       run: docker rmi webapi -f
     - name: Build the Docker image
-      run: docker build . -t webapi
+      run: docker build -f DockerfileApi . -t webapi
     - name: Run Docker image
       run: docker run -d -p 8080:80 --name myapp webapi
       
@@ -32,10 +32,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-#     - name: Enter to directory
-#       run: cd ClientApp/
     - name: Build the Docker image
-      run: docker-compose -f ClientApp/docker-compose.yaml build
+      run: docker-compose -f docker-compose.yaml build
     - name: Run Docker image
-      run: docker-compose -f ClientApp/docker-compose.yaml up -d
+      run: docker-compose -f docker-compose.yaml up -d
 
