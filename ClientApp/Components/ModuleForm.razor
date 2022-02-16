@@ -4,21 +4,26 @@
 
 @inject IHttpClientFactory ClientFactory
 
-
-@if (Module.ValueType == typeof(bool))
-{
-    <Switch @bind-Checked="_switchValue"/>
-}
-else if(Module.ValueType == typeof(int))
-{
-    <Slider TValue="double" Value="_sliderValue" Min="@Module.ValueMaxInt" Max="@Module.ValueMaxInt" DefaultValue="_sliderValue" />
-}
-else if (Module.ValueType == typeof(string))
-{
-    <Input @bind-Value="@_inputValue"  />
-}
-
-<Button OnClick="UpdateModuleStatus" >Oтправить</Button>
+<Space Direction="DirectionVHType.Vertical" Align="center">
+    <SpaceItem>
+        @if (Module.ValueType == typeof(bool))
+        {
+            <Switch @bind-Checked="_switchValue"/>
+        }
+        else if (Module.ValueType == typeof(int))
+        {
+            <Slider TValue="double" Min="@Module.ValueMinInt" Max="@Module.ValueMaxInt" @bind-Value="@_sliderValue" />
+            <AntDesign.InputNumber TValue="double" Min="@Module.ValueMinInt" Max="@Module.ValueMaxInt" Style="margin:0 16px;" @bind-Value="@_sliderValue" />
+        }
+        else if (Module.ValueType == typeof(string))
+        {
+            <Input @bind-Value="@_inputValue"/>
+        }
+    </SpaceItem>
+    <SpaceItem>
+        <Button OnClick="UpdateModuleStatus">Oтправить</Button>
+    </SpaceItem>
+</Space>
 
 @code {
     [Parameter]
@@ -45,7 +50,7 @@ else if (Module.ValueType == typeof(string))
     }
 
     private bool _switchValue;
-    private double _sliderValue = 0;
+    private double _sliderValue;
     private string _inputValue;
 
     

@@ -1,11 +1,14 @@
 @using Home.Core.Modules
+@using Home.Core.Models
 
 <Card Bordered="true" Title=@($"{Module.Name} ({Module.Pin})") Style="width: 300px"> 
     <Body>
         <p>Значение: @(Module.Value ?? "Нет данных")</p>
-    
-    @* TODO Some forms with Params Id and type of module *@
-    @* It must dispatch type of fielsd and valus range. *@
+        
+        @if (Module.ConnectionType != EConnectionType.IN)
+        {
+            <ModuleForm Module="Module" />
+        }
     </Body>
 </Card>
 
