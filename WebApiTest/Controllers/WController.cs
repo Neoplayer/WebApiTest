@@ -45,7 +45,7 @@ namespace WebApiTest.Controllers
                 }).ToList()
             });
 
-            return Ok();
+            return Ok("success");
         }
 
         [HttpGet("Users")]
