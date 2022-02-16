@@ -29,10 +29,10 @@
 
     async Task UpdateValue()
     {
-        while (true)
-        {
-            await Task.Run(async () =>
-            {            
+        await Task.Run(async () =>
+        {        
+            while (true)
+            {
                 var request = new HttpRequestMessage(HttpMethod.Get,
                 Settings.Address + "/W/GetUserSensorById?user=Me&password=123&sensor=" + Module.Pin);
                 request.Headers.Add("Access-Control-Allow-Origin", "http://194.58.107.109:8080");
@@ -47,11 +47,9 @@
                 Module = module;
                 
                 StateHasChanged();
-            });
 
-            
-            await Task.Delay(100);
-        }
-        System.Diagnostics.Debug.WriteLine("Finished long running task");
+                await Task.Delay(1000);
+            }
+        });
     }
 }
